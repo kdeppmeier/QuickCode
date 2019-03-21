@@ -93,6 +93,10 @@ public class FillInTheBlankQuestion:MonoBehaviour
         }
 
         string wrongAnswerFeedback = num1 + " " + randomOp + " " + num2 + " = " + correctAnswer;
+        if (randomOp == '/')
+        {
+            wrongAnswerFeedback += "\nNote: With integer division, decimals get cut off.  (ie. 1.85 will become 1)";
+        }
 
         //New question
         newCode += "int foo;";
@@ -133,6 +137,10 @@ public class FillInTheBlankQuestion:MonoBehaviour
         }
 
         string wrongAnswerFeedback = "foo " + randomOp + " bar = " + num1 + " " + randomOp + " " + num2 + " = " + correctAnswer;
+        if (randomOp == '/')
+        {
+            wrongAnswerFeedback += "\nNote: With integer division, decimals get cut off.  (ie. 1.85 will become 1)";
+        }
 
         //New question
         newCode += "int foo = " + num1 + ";";
