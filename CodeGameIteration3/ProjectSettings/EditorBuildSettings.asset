@@ -8,4 +8,19 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/game menu.unity
+    guid: c80f02e29043d394bab209572707df25
+  - enabled: 1
+    path: Assets/Scenes/level select.unity
+    guid: 06b22b084801f944a918d60eace4682c
+  - enabled: 1
+    path: Assets/Scenes/FitB.unity
+    guid: 421531e69a8e16a4491529682fa7e487
+  - enabled: 1
+    path: Assets/Scenes/MultipleChoice.unity
+    guid: 64f052bd030ae7f458b3baa839a8c024
+  - enabled: 1
+    path: Assets/Scenes/main.unity
+    guid: c436efdd8a2b19d42b7d48eb3433924c
   m_configObjects: {}

@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class GameController : MonoBehaviour
     GameObject wrongPopup; //The panel that pops up when the user gets an answer wrong
 
     //[System.Serializable]
-    public int[] questionTypes; //A list of the question types that are going to be used
+    //public int[] questionTypes; //A list of the question types that are going to be used
+    int[] questionTypes;
 
     private int correctAnswer;  //The correct answer for a given question
     private string wrongAnswerFeedback; //The feedback should the user get the question wrong
@@ -40,6 +42,8 @@ public class GameController : MonoBehaviour
         correctPopup.SetActive(false); //Deactivates the popup panel
         wrongPopup = GameObject.Find("WrongPopup").gameObject;
         wrongPopup.SetActive(false);
+
+        questionTypes = GameManager.instance.fitbTypes;  //Grabs the question types from the game manager
 
         fbq = gameObject.GetComponent<FillInTheBlankQuestion>(); //Picks a random fill in the blank question
 
