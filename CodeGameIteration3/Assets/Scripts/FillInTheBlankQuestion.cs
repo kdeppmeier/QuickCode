@@ -20,6 +20,9 @@ public class FillInTheBlankQuestion:MonoBehaviour
         questionList.Add(makeNumQuestion);
         questionList.Add(makeNumOpNumQuestion);
         questionList.Add(makeVarOpVarQuestion);
+        questionList.Add(makeForLoopQuestion);
+        questionList.Add(makeWhileLoopQuestion);
+        questionList.Add(makeArrayQuestion);
     }
 
     public FBQData pickRandomQuestion()
@@ -59,6 +62,7 @@ public class FillInTheBlankQuestion:MonoBehaviour
         //new Question
         newCode += "int foo;";
         newCode += "\nfoo = " + correctAnswer;
+        newCode += "\ncout << foo << endl;";
 
         return new FBQData(newCode, wrongAnswerFeedback, correctAnswer);
     }
@@ -107,7 +111,7 @@ public class FillInTheBlankQuestion:MonoBehaviour
         return new FBQData(newCode, wrongAnswerFeedback, correctAnswer);
     }
 
-    FBQData makeVarOpVarQuestion()
+    private FBQData makeVarOpVarQuestion()
     {
         string newCode = "";  //The string containing the code question
 
@@ -150,4 +154,87 @@ public class FillInTheBlankQuestion:MonoBehaviour
 
         return new FBQData(newCode, wrongAnswerFeedback, correctAnswer);
     }
+
+    private FBQData makeForLoopQuestion()
+    {
+        int num1 = Random.Range(0, 10);
+        int num2 = Mathf.Min(10, num1 + Random.Range(0, 10));
+
+        int correctAnswer = 0;
+        for (int i = num1; i < num2; i++)
+        {
+            correctAnswer += 1;
+        }
+
+        string newCode = "";
+        newCode += "int x = 0;\n";
+        newCode += "\nfor (int i = " + num1 + "; i < " + num2 + "; i++)";
+        newCode += "\n{";
+        newCode += "\n  x += 1;";
+        newCode += "\n}";
+        newCode += "\n\ncout << x << endl;";
+
+        string wrongAnswerFeedback = "The correct answer was " + correctAnswer + ".\n";
+        wrongAnswerFeedback += "The for loop would have run " + num2 + " - " + num1 + " = " + correctAnswer + " times.";
+
+        return new FBQData(newCode, wrongAnswerFeedback, correctAnswer);
+    }
+
+    private FBQData makeWhileLoopQuestion()
+    {
+        int num1 = Random.Range(0, 10);
+        int num2 = Mathf.Min(10, num1 + Random.Range(0, 10));
+
+        int correctAnswer = 0;
+        int i = num1;
+        while (i < num2)
+        {
+            correctAnswer += 1;
+            i++;
+        }
+
+        string newCode = "";
+        newCode += "int x = 0;";
+        newCode += "\nint i = " + num1 + "\n";
+        newCode += "\nwhile (i < " + num2 + ")";
+        newCode += "\n{";
+        newCode += "\n  x += 1;";
+        newCode += "\n  i++;";
+        newCode += "\n}";
+        newCode += "\n\ncout << x << endl;";
+
+        string wrongAnswerFeedback = "The correct answer was " + correctAnswer + ".\n";
+        wrongAnswerFeedback += "The while loop would have run " + num2 + " - " + num1 + " = " + correctAnswer + " times.";
+
+        return new FBQData(newCode, wrongAnswerFeedback, correctAnswer);
+    }
+
+    private FBQData makeArrayQuestion()
+    {
+        //Generates a random length for the array and a random index within that length
+        int randArrayLength = Random.Range(1, 5);
+        int randArrayIndex = Random.Range(0, randArrayLength);
+
+        //Randomly generates elements for the array
+        int[] elements = new int[randArrayLength];
+        for (int i = 0; i < randArrayLength; i++)
+        {
+            elements[i] = Random.Range(0, 9);
+        }
+
+        int correctAnswer = elements[randArrayIndex];
+
+        string newCode = "";
+        newCode += "int x[" + randArrayLength + "] = {";
+        newCode += string.Join(", ", elements) + "};";
+        newCode += "\nint index = " + randArrayIndex + ";";
+        newCode += "\ncout << x[index] << endl;";
+
+        string wrongAnswerFeedback = "x[" + randArrayIndex + "] is element " + randArrayIndex + " of array x, which is " + correctAnswer + ".";
+        wrongAnswerFeedback += "\nNote: The first element in an array is at index 0 rather than 1.";
+
+        return new FBQData(newCode, wrongAnswerFeedback, correctAnswer);
+    }
+
+
 }

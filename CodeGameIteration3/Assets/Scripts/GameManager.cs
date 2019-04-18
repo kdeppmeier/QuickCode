@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     //[System.Serializable]
     public int[] fitbTypes; //The types of fill-in-the-blank questions to use
+    public int score = 0;   //The user's score on the run
+    public int questionsAnswered = 0;   //The number of questions answered on the run
 
     //creates a new GameManager if one doesn't already exist
     void Awake()

@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     GameObject codeQuestion;  //The Text object that contains the question for the user to answer
     GameObject correctPopup; //The panel that serves as a popup when the user gets an answer correct
     GameObject wrongPopup; //The panel that pops up when the user gets an answer wrong
+    GameObject scoreBox;  //The text that displays the score
 
     //[System.Serializable]
     //public int[] questionTypes; //A list of the question types that are going to be used
@@ -43,6 +44,9 @@ public class GameController : MonoBehaviour
         wrongPopup = GameObject.Find("WrongPopup").gameObject;
         wrongPopup.SetActive(false);
 
+        scoreBox = GameObject.Find("Score").gameObject;
+        scoreBox.GetComponent<Text>().text = "Score: " + GameManager.instance.score; //displays the current score
+
         questionTypes = GameManager.instance.fitbTypes;  //Grabs the question types from the game manager
 
         fbq = gameObject.GetComponent<FillInTheBlankQuestion>(); //Picks a random fill in the blank question
@@ -63,6 +67,13 @@ public class GameController : MonoBehaviour
                 wrongPopup.SetActive(false);
                 wrongPanelUp = false;
 
+                if (GameManager.instance.questionsAnswered == 10)
+                {
+                    Debug.Log("Run finished");
+                    //Go to end of run scene
+                    SceneManager.LoadScene("EndofRun");
+                }
+
                 newQuestion();
 
                 answerBox.GetComponent<InputField>().ActivateInputField();  //So the user doesn't have to click in the input field
@@ -72,6 +83,17 @@ public class GameController : MonoBehaviour
             {
                 if (answerBox.GetComponent<InputField>().text.Equals(correctAnswer.ToString()))  //if answer is correct
                 {
+                    GameManager.instance.score += 1; //Updates score
+                    GameManager.instance.questionsAnswered += 1;
+                    scoreBox.GetComponent<Text>().text = "Score: " + GameManager.instance.score;
+
+                    if (GameManager.instance.questionsAnswered == 10)
+                    {
+                        Debug.Log("Run finished");
+                        //Go to end of run scene
+                        SceneManager.LoadScene("EndofRun");
+                    }
+
                     newQuestion();  //Generates new question
                     StartCoroutine(Popup());  //Calls the coroutine for the popup
 
@@ -80,6 +102,9 @@ public class GameController : MonoBehaviour
                 }
                 else if (!answerBox.GetComponent<InputField>().text.Equals("")) //if answer is wrong, not just blank
                 {
+                    //GameManager.instance.score = Mathf.Max(GameManager.instance.score - 5, 0); //Updates score
+                    GameManager.instance.questionsAnswered += 1;
+                    scoreBox.GetComponent<Text>().text = "Score: " + GameManager.instance.score;
                     wrongPopup.transform.Find("Feedback").GetComponent<Text>().text = wrongAnswerFeedback;  //Changes the text on the popup
                     //to reflect the question
                     wrongPopup.SetActive(true);  //activates the popup
